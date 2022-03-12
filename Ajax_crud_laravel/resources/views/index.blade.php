@@ -19,6 +19,9 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>created</th>
+                            <th>Updated</th>
+                            <th>action</th>
                             
                         </tr>
                     </thead>
@@ -47,10 +50,19 @@
             serverSide: true,
             ajax: '{{route('data-json')}}',
             columns: [
-                {data:'id', name:'id'},
-                {data:'name', name:'name'},
-                {data:'email', name:'email'},
-    
+                // {data: 0, name: 'id'},
+                // {data: 1, name: 'name'},
+                // {data: 2, name: 'email'},
+                // {data: 3, name: 'created_at'},
+                // {data: 4, name: 'updated_at'}
+
+                //=====================
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name'},
+                {data: 'email', name: 'email'},
+                {data: 'created_at', name: 'created_at'},
+                {data: 'updated_at', name: 'updated_at'},
+                {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
     });
