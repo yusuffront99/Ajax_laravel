@@ -101,22 +101,56 @@
         //=== add user
         $('#save').click(function(e){
             e.preventDefault();
-            $(this).html('sending...');
 
             $.ajax({
                 data: $('#userForm').serialize(),
                 url: "{{route('user.store')}}",
                 type: "POST",
                 dataType: 'json',
-                success: function(data){
-                    console.log('success');
-                },
-                error: function(data) {
-                    console.error('error :', data);
-                }
-            })
-            
-            })
+                    success: function(data){
+                        $(this).html('sending...');
+                        $('#userForm').trigger("reset");
+                        $('#modal').modal("hide");
+                        table.draw();
+                    },
+                    error: function(data) {
+                        console.error('error :', data);
+                    }
+                });
+            });
+
+            //=== EDIT
+            $('body').on('click', '.edit-data', function(){
+                var id = $(this).data('id');
+                $.get("{{route('user.index')}}" +'/' + id +'/edit', function(data){
+                    $('#modalLabel').html("Edit User");
+                    $('#modal').modal('show');
+                    $('#save').val('edit-user');
+                    
+                    //=== DATA OLD VALUE
+                    $('#id').val(data.id);
+                    $('#name').val(data.name);
+                    $('#email').val(data.email);
+                });
+            });
+
+            //=== DELETE
+            $('body').on('click', '.delete-data', function(){
+
+                var id = $(this).data("id");
+                confirm('Are you sure want to delete');
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "{{route('user.store')}}"+'/'+id,
+                    success: function(data){
+                        table.draw();
+                    },
+                    error: function(data){
+                        console.log('Error : ', data);
+                    }
+                });
+            });
         });
     </script>
 </html>

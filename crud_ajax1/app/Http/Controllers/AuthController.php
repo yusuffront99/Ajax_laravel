@@ -20,9 +20,9 @@ class AuthController extends Controller
         if($request->ajax()) {
             return DataTables::of($data)
                 ->addColumn('action', function($data){
-                    $button = '<a href="javascript:void(0)" data-id="'.$data->id.'"class="btn btn-info"><i class="bi bi-pencil-square"></i> Edit</a>';
+                    $button = '<a href="javascript:void(0)" data-id="'.$data->id.'"class="btn btn-info edit-data"><i class="bi bi-pencil-square"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<a href="javascript:void(0)" data-id="'.$data->id.'"class="btn btn-danger"><i class="bi bi-trash-fill"></i> Delete</a>';     
+                    $button .= '<a href="javascript:void(0)" data-id="'.$data->id.'"class="btn btn-danger delete-data"><i class="bi bi-trash-fill"></i> Delete</a>';     
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -70,7 +70,8 @@ class AuthController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = User::find($id);
+        return response()->json($data);
     }
 
     /**
@@ -93,6 +94,7 @@ class AuthController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
+        return response()->json(['success'=>'User deleted successfully']);
     }
 }
