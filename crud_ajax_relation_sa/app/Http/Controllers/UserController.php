@@ -51,7 +51,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::updateOrCreate(
+            ['id' => $request->id],
+            [
+                'name' => $request->name,
+                'email' => $request->email,
+                'age' => $request->age,
+                'gender' => $request->gender
+            ]
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User Added Successfully'
+        ]);
     }
 
     /**
@@ -62,7 +75,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -73,7 +86,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = User::find($id);
+
+        return response()->json($data);
     }
 
     /**
