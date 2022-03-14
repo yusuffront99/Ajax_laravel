@@ -48,7 +48,7 @@ class AuthController extends Controller
             ['name' => $request->name, 'email' => $request->email]
         );
 
-        return response()->json(['success' => 'User Added Successfully']);
+        return response()->json(['success' => true, 'message'=>'User Added Successfully']);
     }
 
     /**
@@ -95,6 +95,6 @@ class AuthController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
-        return response()->json(['success'=>'User deleted successfully']);
+        return response()->json(['success'=> true, 'message'=>'User deleted successfully']);
     }
 }

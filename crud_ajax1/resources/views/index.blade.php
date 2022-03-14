@@ -9,6 +9,7 @@
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 </head>
 <body>
@@ -111,6 +112,14 @@
                         $(this).html('sending...');
                         $('#userForm').trigger("reset");
                         $('#modal').modal("hide");
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'User Saved Successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                         table.draw();
                     },
                     error: function(data) {
@@ -138,18 +147,42 @@
             $('body').on('click', '.delete-data', function(){
 
                 var id = $(this).data("id");
-                confirm('Are you sure want to delete');
-
-                $.ajax({
-                    type: "DELETE",
-                    url: "{{route('user.store')}}"+'/'+id,
-                    success: function(data){
-                        table.draw();
-                    },
-                    error: function(data){
-                        console.log('Error : ', data);
-                    }
-                });
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                        }).then(function(e){
+                            if(e.value === true){
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: "{{route('user.store')}}"+'/'+id,
+                                    success: function(data){
+                                        if(data.success === true){
+                                            Swal.fire(
+                                                'Deleted!',
+                                                'Your file has been deleted.',
+                                                'success'
+                                            )
+                                        }else{
+                                            Swal.fire(
+                                                'Failed!',
+                                                'Your file Failed.',
+                                                'Error'
+                                            )
+                                        }
+                                        table.draw()
+                                    },
+                                    error: function(data){
+                                        console.log('Error : ', data);
+                                    }
+                                });
+                            }
+                        });
+                
             });
         });
     </script>
