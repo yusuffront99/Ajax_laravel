@@ -135,14 +135,48 @@
                     $('#save').val('edit-user');
                     
                     // //=== DATA OLD VALUE
-                    // $('#id').val(data.id);
-                    // $('#name').val(data.name);
-                    // $('#email').val(data.email);
-                    // $('#age').val(data.age);
+                    $('#id').val(data.id);
+                    $('#name').val(data.name);
+                    $('#email').val(data.email);
+                    $('#age').val(data.age);
                     $('#gender').val(data.gender);
                     
-                });
             });
+        });
+
+        //=== DELETE
+        $('.container').on('click', '.delete-data', function(){
+            var id = $(this).data('id');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this",
+                icon: "warning",
+                showCancelButton: true,
+                ConfirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                ConfirmButtonText: 'Yes, delete it!'
+            }).then(function(e){
+                if(e.isConfirmed === true){
+                    $.ajax({
+                        type: 'DELETE',
+                        url: "{{route('user.store')}}"+"/"+id,
+                        success: function(data){
+                            if(data.success === true){
+                                Swal.fire(
+                                    'Deleted',
+                                    'Your file has been deleted',
+                                    'success'
+                                )
+                            }
+                            table.draw()
+                        },
+                        error: function(data){
+                            console.log('Error : ', data);
+                        }
+                    });
+                }
+            });
+        });
     });
     </script>
 @endpush
