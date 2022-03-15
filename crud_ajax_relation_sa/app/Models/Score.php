@@ -10,7 +10,7 @@ class Score extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'users_id',
         'grade',
         'score'
     ];

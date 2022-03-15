@@ -16,13 +16,16 @@ class ScoreController extends Controller
      */
     public function index(Request $request)
     {
+        $items = User::get();
         $data = Score::with(['user'])->get();
 
         if($request->ajax()){
-            return DataTables::of($data)
+            return DataTables::of($data, $items)
+            //=== relationship column add
             ->addColumn('users', function(Score $score){
                 return $score->user->name;
             })
+            //===============================
             ->addColumn('action', function($data){
                 $button = '<a href="javascript:void(0)" data-id="'.$data->id.'"class="btn btn-info edit-data"><i class="bi bi-pencil-square"></i> Edit</a>';
                 $button .= '&nbsp;&nbsp;';
@@ -34,7 +37,9 @@ class ScoreController extends Controller
                 ->make(true);
         }
 
-        return view('score');
+        return view('score', [
+            'items' => $items
+        ]);
     }
 
     /**
@@ -55,7 +60,12 @@ class ScoreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Score::updateOrCreate($request->all());
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data Added Successfully'
+            ]);
     }
 
     /**

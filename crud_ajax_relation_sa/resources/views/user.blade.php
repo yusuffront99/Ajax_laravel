@@ -36,7 +36,7 @@
             <form name="form-user" id="form-user">
                 <input type="hidden" name="id" id="id">
                 <div class="form-group">
-                    <label for="name" class="form-label">$data->user->name</label>
+                    <label for="name" class="form-label">Name</label>
                     <input name="name" type="text" class="form-control" id="name" placeholder="name" required>
                 </div>
                 <div class="form-group">
