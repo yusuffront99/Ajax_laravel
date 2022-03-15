@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Score;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ScoreController extends Controller
 {
@@ -11,9 +14,27 @@ class ScoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $data = Score::with(['user'])->get();
+
+        if($request->ajax()){
+            return DataTables::of($data)
+            ->addColumn('users', function(Score $score){
+                return $score->user->name;
+            })
+            ->addColumn('action', function($data){
+                $button = '<a href="javascript:void(0)" data-id="'.$data->id.'"class="btn btn-info edit-data"><i class="bi bi-pencil-square"></i> Edit</a>';
+                $button .= '&nbsp;&nbsp;';
+                $button .= '<a href="javascript:void(0)" data-id="'.$data->id.'"class="btn btn-danger delete-data"><i class="bi bi-trash-fill"></i> Delete</a>';     
+                return $button;
+            })
+            ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+
+        return view('score');
     }
 
     /**

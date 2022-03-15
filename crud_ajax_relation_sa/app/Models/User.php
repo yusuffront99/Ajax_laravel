@@ -15,4 +15,9 @@ class User extends Model
         'age',
         'gender'
     ];
+
+    public function score()
+    {
+        return $this->belongsTo(Score::class);
+    }
 }

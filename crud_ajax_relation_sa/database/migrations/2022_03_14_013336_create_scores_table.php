@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
+            $table->foreignId('users_id');
             $table->double('score');
             $table->string('grade');
             $table->timestamps();

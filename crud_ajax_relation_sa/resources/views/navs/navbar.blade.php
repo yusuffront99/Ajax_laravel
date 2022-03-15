@@ -7,10 +7,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Data User</a>
+            <a class="nav-link active" aria-current="page" href="{{route('user.index')}}">Data User</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Scores</a>
+            <a class="nav-link" href="{{route('score.index')}}">Scores</a>
             </li>
         </ul>
         </div>
