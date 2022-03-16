@@ -12,7 +12,8 @@ class Score extends Model
     protected $fillable = [
         'users_id',
         'grade',
-        'score'
+        'score',
+        'image'
     ];
 
     public function user()
