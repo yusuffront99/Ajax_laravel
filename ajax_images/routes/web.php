@@ -13,4 +13,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::resource('image', ImageController::class);
+Route::controller(ImageController::class)->group(function(){
+    Route::get('/image', 'index')->name('image-index');
+    Route::post('/image', 'store')->name('image-store');
+});
