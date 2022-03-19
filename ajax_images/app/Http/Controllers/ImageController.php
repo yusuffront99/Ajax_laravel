@@ -69,4 +69,19 @@ class ImageController extends Controller
             // return to_route('image.index');
         }
     }
+
+    // public function edit(Request $request)
+    // {
+    //     $where = array('id' => $request->id);
+    //     $image  = Image::where($where)->first();
+    
+    //     return Response()->json($image);
+    // }
+
+    // public function delete(Request $request)
+    // {
+    //     $images= Image::where('id',$request->id)->delete();
+    
+    //     return Response()->json($images);
+    // }
 }

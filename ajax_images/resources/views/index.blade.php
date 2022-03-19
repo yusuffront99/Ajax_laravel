@@ -66,78 +66,80 @@
         }
     });
     $('#image').change(function(){
-           
+            
     let reader = new FileReader();
     reader.onload = (e) => { 
-      $('#preview-image').attr('src', e.target.result); 
+        $('#preview-image').attr('src', e.target.result); 
     }
     reader.readAsDataURL(this.files[0]); 
-  
-   });
+
+    });
     $('#datatable-ajax-crud').DataTable({
-           processing: true,
-           serverSide: true,
-           ajax: "{{route('image-index') }}",
-           columns: [
+            processing: true,
+            serverSide: true,
+            ajax: "{{route('image-index')}}",
+            columns: [
                     {data: 'id', name: 'id'},
                     { data: 'image', name: 'image' , orderable: false},
                     { data: 'url', name: 'url' , orderable: false},
                     {data: 'action', name: 'action', orderable: false},
-                 ],
-          order: [[0, 'desc']]
+                    ],
+            order: [[0, 'desc']]
     });
     $('#addNewBook').click(function () {
-       $('#addEditBookForm').trigger("reset");
-       $('#ajaxBookModel').html("Add Book");
-       $('#ajax-book-model').modal('show');
-       $("#image").attr("required", "true");
-       $('#id').val('');
-       $('#preview-image').attr('src', '');
+        $('#addEditBookForm').trigger("reset");
+        $('#ajaxBookModel').html("Add Book");
+        $('#ajax-book-model').modal('show');
+        $("#image").attr("required", "true");
+        $('#id').val('');
+        $('#preview-image').attr('src', '');
     });
- 
+
     // $('body').on('click', '.edit', function () {
     //     var id = $(this).data('id');
-         
+            
     //     // ajax
     //     $.ajax({
     //         type:"POST",
-    //         url: "{{ url('edit-book') }}",
+    //         url: "{{route('image.edit')}}",
     //         data: { id: id },
     //         dataType: 'json',
     //         success: function(res){
-    //           $('#ajaxBookModel').html("Edit Book");
-    //           $('#ajax-book-model').modal('show');
-    //           $('#id').val(res.id);
-    //           $('#title').val(res.title);
-    //           $('#code').val(res.code);
-    //           $('#author').val(res.author);
-    //           $('#image').removeAttr('required');
-    //        }
+    //             $('#ajaxBookModel').html("Edit Book");
+    //             $('#ajax-book-model').modal('show');
+    //             $('#id').val(res.id);
+    //             $('#title').val(res.title);
+    //             $('#code').val(res.code);
+    //             $('#author').val(res.author);
+    //             $('#image').removeAttr('required');
+    //         }
     //     });
     // });
+
     // $('body').on('click', '.delete', function () {
-    //    if (confirm("Delete Record?") == true) {
+    //     if (confirm("Delete Record?") == true) {
     //     var id = $(this).data('id');
-         
+            
     //     // ajax
     //     $.ajax({
     //         type:"POST",
-    //         url: "{{ url('delete-book') }}",
+    //         url: "{{route('image.destroy')}}",
     //         data: { id: id },
     //         dataType: 'json',
     //         success: function(res){
-    //           var oTable = $('#datatable-ajax-crud').dataTable();
-    //           oTable.fnDraw(false);
-    //        }
+    //             var oTable = $('#datatable-ajax-crud').dataTable();
+    //             oTable.fnDraw(false);
+    //         }
     //     });
-    //    }
+    //     }
     // });
-   $('#addEditBookForm').submit(function(e) {
-     e.preventDefault();
-  
-     var formData = new FormData(this);
-  
-     $.ajax({
+
+    $('#addEditBookForm').submit(function(e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+
+        $.ajax({
         type:'POST',
         url: "{{route('image-store')}}",
         data: formData,
@@ -145,17 +147,17 @@
         contentType: false,
         processData: false,
         success: (data) => {
-          $("#ajax-book-model").modal('hide');
-          var oTable = $('#datatable-ajax-crud').dataTable();
-          oTable.fnDraw(false);
-          $("#btn-save").html('Submit');
-          $("#btn-save"). attr("disabled", false);
+            $("#ajax-book-model").modal('hide');
+            var oTable = $('#datatable-ajax-crud').dataTable();
+            oTable.fnDraw(false);
+            $("#btn-save").html('Submit');
+            $("#btn-save"). attr("disabled", false);
         },
         error: function(data){
-           console.log(data);
-         }
-       });
-   });
+            console.log(data);
+            }
+        });
+    });
 });
     </script>
 @endpush

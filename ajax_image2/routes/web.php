@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,11 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::controller(ImageController::class)->group(function(){
-    Route::get('/image', 'index')->name('image-index');
-    Route::post('/image', 'store')->name('image-store');
-    // Route::post('/image{id}', 'edit')->name('image-edit');
-    // Route::post('/image{id}', 'delete')->name('image-delete');
-});
 
-// Route::resource('image', ImageController::class);
+Route::get('/', function () {
+    return view('welcome');
+});
